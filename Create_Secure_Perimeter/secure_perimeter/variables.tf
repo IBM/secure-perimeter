@@ -13,12 +13,12 @@ variable "bluemix_api_key" {
 
 variable "org" {
   description = "Your IBM Cloud org name."
-  default = "
+  default = ""
 }
 
 variable "space" {
   description = "Your IBM Cloud space name."
-  default = "
+  default = ""
 }
 
 variable "sps_subnet_size" {
@@ -27,19 +27,19 @@ variable "sps_subnet_size" {
 }
 variable "f_router_hostname" {
   description = "Name of front router hostname to deploy secure perimeter for example fcr02a.dal13"
-  default = "
+  default = ""
 }
 variable "b_router_hostname" {
   description = "Name of back router hostname to deploy secure perimeter for example bcr02a.dal13"
-  default = "
+  default = ""
 }
 variable "region" {
   description = "The IBM Cloud region where you want to deploy your cluster for example us-south."
-  default = "
+  default = ""
 }
 variable "datacenter" {
   description = "The data center for the cluster, You can get the list with by running bluemix cs locations for example dal13."
-  default = "
+  default = ""
 }
 
 
