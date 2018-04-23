@@ -98,3 +98,28 @@ data "ibm_account" "account" {
 output "monitoring_cluster_name" {
   value = "${var.cluster_name}-${random_id.name.hex}"
 }
+output "sps_public_vlan_id" {
+  value = "${module.network.sps_public_vlan_id}"
+}
+output "sps_private_vlan_id" {
+  value = "${module.network.sps_private_vlan_id}"
+}
+output "sps_public_vlan_name" {
+  value = "${module.network.sps_public_vlan_name}"
+}
+output "sps_private_vlan_name" {
+  value = "${module.network.sps_private_vlan_name}"
+}
+output "sps_public_vlan_num" {
+  value = "${module.network.sps_public_vlan_num}"
+}
+output "sps_private_vlan_num" {
+  value = "${module.network.sps_private_vlan_num}"
+}
+output "gateway_name" {
+  value = "${module.network.gateway_name}"
+}
+output "gateway_id" {
+  value = "${module.network.gateway_id}"
+}
+  
