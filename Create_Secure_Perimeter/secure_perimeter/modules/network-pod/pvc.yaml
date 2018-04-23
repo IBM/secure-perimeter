@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: network-pvc
+  namespace: sp-monitoring
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 1Gi
+
+
