@@ -1,0 +1,19 @@
+{
+  "apikey": "XXXX", 
+  "region": "XXXX",
+  "inf_name_private": "dp0bond0", 
+  "inf_name_public": "dp0bond1", 
+  "gatewayid": "XXX",
+  "vyatta_gateway_vip": "XXX",
+  "slid": "XXXX", 
+  "vlans": [
+  ], 
+  "vyatta_primary": {
+    "private_ip": "1.0.1.1",
+    "public_ip": "1.0.1.1"
+  }, 
+  "vyatta_secondary": {
+    "private_ip": "1.0.0.5",
+    "public_ip": "1.0.0.5"
+  }
+}
