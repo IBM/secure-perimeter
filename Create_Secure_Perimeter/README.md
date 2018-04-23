@@ -1,13 +1,13 @@
 # IBM Cloud Secure Perimeter 
 
-An IBM Cloud provider template to provision a secure Perimeter  - which consists of a 2 member HA vyatta, a public vlan , a private vlan and a Kubernetes cluster with 1 worker node in IBM Cloud. The infrastructure used is [Terraform](https://www.terraform.io/). With this template, you can provision and manage infrastructure as a single unit. This template also deploys onto the kubernetes monitoring cluster,  a health pod for monitoring health of the perimeter,  and a network pod responsible for setting up the security on the vyatta to  maintain the secure perimeter.
+An IBM Cloud provider template to provision a secure Perimeter  - which consists of a 2 member HA vyatta, a public vlan, a private vlan and a Kubernetes cluster with 1 worker node in IBM Cloud. The infrastructure used is [Terraform](https://www.terraform.io/). With this template, you can provision and manage infrastructure as a single unit. This template also deploys onto the kubernetes monitoring cluster,  a health pod for monitoring health of the perimeter,  and a network pod responsible for setting up the security on the vyatta to  maintain the secure perimeter.
 
 
 ## Create a Secure Perimeter with this template
 
 
 
-Pre-requisistes 
+Pre-requisites 
 
 
     IBM Cloud infrastructure VPN access for SL account  
