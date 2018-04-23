@@ -9,7 +9,7 @@ The infrastructure used is [Terraform](https://www.terraform.io/). With this tem
 
 
 
-Pre-requisistes 
+Pre-requisites 
 
 
     IBM Cloud infrastructure VPN access for SL account
