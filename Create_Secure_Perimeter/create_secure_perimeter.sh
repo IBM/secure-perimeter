@@ -24,10 +24,10 @@ terraform apply
 
 cp ../health_pod.tf ./modules/monitoring_cluster
 terraform init
-terraform apply  -target=module.monitoring_cluster.module.health-pod
+terraform apply  -target=module.monitoring_cluster.module.health-pod -auto-approve
 
 cp ../network_pod.tf ./modules/monitoring_cluster
 terraform init
-terraform apply  -target=module.monitoring_cluster.module.network-pod
+terraform apply  -target=module.monitoring_cluster.module.network-pod -auto-approve
 
 

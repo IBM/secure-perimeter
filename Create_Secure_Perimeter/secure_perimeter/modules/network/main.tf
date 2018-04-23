@@ -155,6 +155,13 @@ resource "null_resource" "configure_vyatta_file" {
 ##############################################################################
 # Outputs
 ##############################################################################
+
+output "gateway_name" {
+  value = "${ibm_network_gateway.gateway.name}"
+}
+output "gateway_id" {
+  value = "${ibm_network_gateway.gateway.id}"
+}
 output "sps_public_vlan_id" {
   value = "${ibm_network_vlan.sps_public_vlan.id}"
 }
