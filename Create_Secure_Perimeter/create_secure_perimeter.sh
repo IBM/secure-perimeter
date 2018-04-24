@@ -26,18 +26,20 @@ else
 
    terraform init
    terraform apply
+   result = $?
+   # if monitoring cluster is up then create health and network pods 
+   if [ ${result} -eq 0 ]
+   then 
 
+     cp ../health_pod.tf ./modules/monitoring_cluster
+     terraform init
+     terraform apply  -target=module.monitoring_cluster.module.health-pod -auto-approve
 
-   #wait for monitoring cluster to come up
-
-   cp ../health_pod.tf ./modules/monitoring_cluster
-   terraform init
-   terraform apply  -target=module.monitoring_cluster.module.health-pod -auto-approve
-
-   cp ../network_pod.tf ./modules/monitoring_cluster
-   terraform init
-   terraform apply  -target=module.monitoring_cluster.module.network-pod -auto-approve
-
+     cp ../network_pod.tf ./modules/monitoring_cluster
+     terraform init
+     terraform apply  -target=module.monitoring_cluster.module.network-pod -auto-approve
+   else echo "Network and Health Pods not started since deployment did not complete successfully"
+   fi
    
 fi
 
