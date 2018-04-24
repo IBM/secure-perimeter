@@ -1,15 +1,15 @@
 # IBM Cloud Secure Perimeter Segment
-
+  
 An IBM Cloud provider template to provision a secure Perimeter Segment - which consists of a public vlan and a private vlan.
 This template depends on the previous creation of a Seure Perimeter. This tempalte will also apply rules to the Secure Perimeter to enfore this Secure Segment.
-The infrastructure used is [Terraform](https://www.terraform.io/). With this template, you can provision and manage infrastructure as a single unit. 
+The infrastructure used is [Terraform](https://www.terraform.io/). With this template, you can provision and manage infrastructure as a single unit.
 
 
 ## Create a Secure Perimeter Segment with this template
 
 
 
-Pre-requisistes 
+Pre-requisites
 
 
     IBM Cloud infrastructure VPN access for SL account
@@ -26,24 +26,23 @@ Pre-requisistes
 
 
 
-    bx login –a api..bluemix.net -u username@domain.com --apikey 
+    bx login –a api..bluemix.net -u username@domain.com --apikey
     bx cr login
 
-   
     cd secure-perimeter/Create_Secure_Perimeter_Segment
     terraform workspace new SPS1
     vi variables.tf
-    
-Fill in default values for 
 
-      •	bluemix_api_key
-      •	org
-      •	space
-      •	gateway_name_id
-      •	region
-      •	vlan_subnet_size
-      •	monitoring_cluster_name_id
-      
+Fill in default values for
+
+      • bluemix_api_key
+      • org
+      • space
+      • gateway_name_id
+      • region
+      • vlan_subnet_size
+      • monitoring_cluster_name_id
+
 and save the file
 
     terraform init
@@ -63,5 +62,4 @@ and save the file
 |region| The [IBM Cloud region](https://console.bluemix.net/docs/containers/cs_regions.html#regions-and-locations) where you want to deploy your secure-perimeter. |us-south|
 |space| Your IBM Cloud space name.|dev|
 |gateway_name_id| name or id of gateway in the seure perimeter|
-|monitoring_cluster_name_id| name or id of monitoring cluster in Secure Perimeter|
-
+|monitoring_cluster_name_id| name or id of monitoring cluster in Secure Perimeter| 
