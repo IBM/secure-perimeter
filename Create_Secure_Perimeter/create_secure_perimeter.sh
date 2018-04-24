@@ -11,7 +11,7 @@
 
 if [ $# -ne 1 ]
   then
-    echo "Usage : create_secure_perimeter.sh <Unique name of terraform workspace - for example SP1>"
+    echo "Usage : create_secure_perimeter.sh <Unique name for this secure perimeter - for example SP1>"
 
 else
    workspace_name=$1
