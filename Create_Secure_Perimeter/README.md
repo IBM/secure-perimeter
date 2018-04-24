@@ -60,7 +60,7 @@ Pre-requisites
         •	datacentre
     and save the file
     cd $HOME/SecurePerimeter/secure-perimeter/Create_Secure_Perimeter
-    ./create_secure_perimeter.sh
+    ./create_secure_perimeter.sh <unique name for this environment - example SP1>
 
     Type yes and press Enter
 
