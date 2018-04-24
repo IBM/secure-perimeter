@@ -7,7 +7,7 @@ An IBM Cloud provider template to provision a secure Perimeter  - which consists
 
 
 
-Pre-requisistes 
+Pre-requisites 
 
 
     IBM Cloud infrastructure VPN access for SL account  
