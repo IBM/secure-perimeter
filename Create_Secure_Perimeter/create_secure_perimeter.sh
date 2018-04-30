@@ -26,7 +26,7 @@ else
 
    terraform init
    terraform apply
-   result = $?
+   result=$?
    # if monitoring cluster is up then create health and network pods 
    if [ ${result} -eq 0 ]
    then 
