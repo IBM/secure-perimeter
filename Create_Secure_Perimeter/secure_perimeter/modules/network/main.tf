@@ -81,7 +81,7 @@ resource "ibm_network_gateway" "gateway" {
     network_speed        = 100
     tcp_monitoring       = true
     tags                 = ["gateway"]
-    notes                = "nebula gateway"
+    notes                = "secure-perimeter"
     process_key_name     = "INTEL_SINGLE_XEON_1270_3_50"
     os_key_name          = "OS_VYATTA_5600_5_X_UP_TO_1GBPS_SUBSCRIPTION_EDITION_64_BIT"
     public_vlan_id       = "${data.ibm_network_vlan.sps_public_vlan.id}"
@@ -100,7 +100,7 @@ resource "ibm_network_gateway" "gateway" {
     network_speed        = 100
     tcp_monitoring       = true
     tags                 = ["gateway"]
-    notes                = "nebula gateway"
+    notes                = "secure-perimeter"
     process_key_name     = "INTEL_SINGLE_XEON_1270_3_50"
     os_key_name          = "OS_VYATTA_5600_5_X_UP_TO_1GBPS_SUBSCRIPTION_EDITION_64_BIT"
     public_vlan_id       = "${data.ibm_network_vlan.sps_public_vlan.id}"
