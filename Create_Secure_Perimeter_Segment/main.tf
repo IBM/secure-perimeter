@@ -63,53 +63,36 @@ resource "random_id" "name" {
   byte_length = 4
 }
 
-resource "ibm_network_vlan" "sps_public_vlan" {
-   name = "sps-pub-${random_id.name.hex}"
-   datacenter = "${module.network_gateway.datacenter}"
-   type = "PUBLIC"
-   subnet_size = "${var.vlan_subnet_size}"
-   router_hostname = "${module.network_gateway.public_vlan_router}"
+data "ibm_network_vlan" "sps_public_vlan" {
+    name = "${var.public_vlan_name}"
+}
+
+data "ibm_network_vlan" "sps_private_vlan" {
+    name = "${var.private_vlan_name}"
 }
 
 resource "ibm_network_gateway_vlan_association" "public_vlan_assoc" {
-  depends_on = ["ibm_network_vlan.sps_public_vlan"]
+  depends_on = ["data.ibm_network_vlan.sps_public_vlan"]
+
   gateway_id      = "${module.network_gateway.id}"
-  network_vlan_id = "${ibm_network_vlan.sps_public_vlan.id}"
+  network_vlan_id = "${data.ibm_network_vlan.sps_public_vlan.id}"
   bypass = false
 }
 
 resource "null_resource" "sleep_for_routing_60_secs" {
-  depends_on = ["ibm_network_vlan.sps_public_vlan"]
+  depends_on = ["ibm_network_gateway_vlan_association.public_vlan_assoc"]
+
   provisioner "local-exec" {
     command = "sleep 60"
   }
-
 }
 
+resource "ibm_network_gateway_vlan_association" "private_vlan_assoc" {
+  depends_on = ["null_resource.sleep_for_routing_60_secs"]
 
-resource "ibm_network_vlan" "sps_private_vlan" {
-  depends_on = ["ibm_network_vlan.sps_public_vlan", "null_resource.sleep_for_routing_60_secs" ]
-  name = "sps-priv-${random_id.name.hex}"
-  datacenter = "${module.network_gateway.datacenter}"
-  type = "PRIVATE"
-  subnet_size = "${var.vlan_subnet_size}"
-  router_hostname = "${module.network_gateway.private_vlan_router}"
-}
-
-  resource "ibm_network_gateway_vlan_association" "private_vlan_assoc" {
-  depends_on = ["ibm_network_vlan.sps_private_vlan"]
   gateway_id      = "${module.network_gateway.id}"
-  network_vlan_id = "${ibm_network_vlan.sps_private_vlan.id}"
+  network_vlan_id = "${data.ibm_network_vlan.sps_private_vlan.id}"
   bypass = false
-}
-
-
-data "ibm_network_vlan" "public_vlan" {
-    name = "${ibm_network_vlan.sps_public_vlan.name}"
-}
-
-data "ibm_network_vlan" "private_vlan" {
-    name = "${ibm_network_vlan.sps_private_vlan.name}"
 }
 
 data "ibm_container_cluster_config" "kube_config" {
@@ -139,12 +122,12 @@ resource "null_resource" "configure_private_vlan" {
   depends_on = ["null_resource.copy-config-from-pod"]
 
   provisioner "local-exec" {
-    command = "python ${path.root}/configure_vyatta.py --action add-vlan -n ${ibm_network_vlan.sps_private_vlan.vlan_number}  -i ${ibm_network_vlan.sps_private_vlan.id} -t private"
+    command = "python ${path.root}/configure_vyatta.py --action add-vlan -n ${data.ibm_network_vlan.sps_private_vlan.number}  -i ${data.ibm_network_vlan.sps_private_vlan.id} -t private"
   }
 
   provisioner "local-exec" {
     when    = "destroy"
-    command = "python ${path.root}/configure_vyatta.py --action remove-vlan -i ${ibm_network_vlan.sps_private_vlan.id} -n ${ibm_network_vlan.sps_public_vlan.vlan_number} -t private"
+    command = "python ${path.root}/configure_vyatta.py --action remove-vlan -i ${data.ibm_network_vlan.sps_private_vlan.id} -n ${data.ibm_network_vlan.sps_public_vlan.number} -t private"
   }
 }
 
@@ -152,12 +135,12 @@ resource "null_resource" "configure_public_vlan" {
   depends_on = ["null_resource.configure_private_vlan"]
 
   provisioner "local-exec" {
-    command = "python ${path.root}/configure_vyatta.py --action add-vlan -n ${ibm_network_vlan.sps_public_vlan.vlan_number}  -i ${ibm_network_vlan.sps_public_vlan.id} -t public"
+    command = "python ${path.root}/configure_vyatta.py --action add-vlan -n ${data.ibm_network_vlan.sps_public_vlan.number}  -i ${data.ibm_network_vlan.sps_public_vlan.id} -t public"
   }
 
   provisioner "local-exec" {
     when    = "destroy"
-    command = "python ${path.root}/configure_vyatta.py --action remove-vlan -i ${ibm_network_vlan.sps_private_vlan.id} -n ${ibm_network_vlan.sps_public_vlan.vlan_number} -t public"
+    command = "python ${path.root}/configure_vyatta.py --action remove-vlan -i ${data.ibm_network_vlan.sps_private_vlan.id} -n ${data.ibm_network_vlan.sps_public_vlan.vnumber} -t public"
   }
 }
 
