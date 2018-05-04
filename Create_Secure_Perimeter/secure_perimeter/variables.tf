@@ -25,14 +25,6 @@ variable "sps_subnet_size" {
   description = "VPCS Subnet Size 8|16|32|64"
   default = 8
 }
-variable "f_router_hostname" {
-  description = "Name of front router hostname to deploy secure perimeter for example fcr02a.dal13"
-  default = ""
-}
-variable "b_router_hostname" {
-  description = "Name of back router hostname to deploy secure perimeter for example bcr02a.dal13"
-  default = ""
-}
 variable "region" {
   description = "The IBM Cloud region where you want to deploy your cluster for example us-south."
   default = ""
