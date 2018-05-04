@@ -57,6 +57,8 @@ module "network" {
     sps_subnet_size = "${var.sps_subnet_size}"
     f_router_hostname = "${var.f_router_hostname}"
     b_router_hostname = "${var.b_router_hostname}"
+    sps_public_vlan_name = "${var.public_vlan_name}"
+    sps_private_vlan_name = "${var.private_vlan_name}"
     region = "${var.region}"
 }
 

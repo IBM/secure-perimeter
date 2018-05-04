@@ -41,6 +41,14 @@ variable "datacenter" {
   description = "The data center for the cluster, You can get the list with by running bluemix cs locations for example dal13."
   default = ""
 }
+variable "public_vlan_name" {
+    description = "Public vlan name"
+    default = ""
+}
+variable "private_vlan_name" {
+    description = "Private vlan name"
+    default = ""
+}
 
 
 variable "cluster_name" {

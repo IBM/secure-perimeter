@@ -11,6 +11,7 @@
 terraform {
   required_version = ">= 0.11.0"
 }
+
 ##############################################################################
 # IBM Network VLAN 
 ##############################################################################
@@ -42,36 +43,18 @@ resource "ibm_compute_ssh_key" "tf_public_key" {
 }
 
 
-resource "ibm_network_vlan" "sps_public_vlan" {
-   depends_on = ["null_resource.pull_image"]
-   name = "pub-neb1-${var.random_id}"
-   datacenter = "${var.datacenter}"
-   type = "PUBLIC"
-   subnet_size = "${var.sps_subnet_size}"
-   router_hostname = "${var.f_router_hostname}"
-}
-
 data "ibm_network_vlan" "sps_public_vlan" {
-    name = "${ibm_network_vlan.sps_public_vlan.name}"
-}
-
-resource "ibm_network_vlan" "sps_private_vlan" {
-   depends_on = ["ibm_network_vlan.sps_public_vlan"]
-   name = "prv-neb1-${var.random_id}"
-   datacenter = "${var.datacenter}"
-   type = "PRIVATE"
-   subnet_size = "${var.sps_subnet_size}"
-   router_hostname = "${var.b_router_hostname}"
+    name = "${var.sps_public_vlan_name}"
 }
 
 data "ibm_network_vlan" "sps_private_vlan" {
-    name = "${ibm_network_vlan.sps_private_vlan.name}"
+    name = "${var.sps_private_vlan_name}"
 }
 
 
 resource "ibm_network_gateway" "gateway" {
   name = "sp-gateway-${var.random_id}"
-  depends_on = ["ibm_network_vlan.sps_private_vlan","ibm_network_vlan.sps_public_vlan","ibm_compute_ssh_key.tf_public_key"]
+  depends_on = ["ibm_compute_ssh_key.tf_public_key"]
   ssh_key_ids = ["${ibm_compute_ssh_key.tf_public_key.id}"]
 
   members {
@@ -136,13 +119,13 @@ resource "null_resource" "configure_vyatta_file" {
 
    # Add public vlan info
    provisioner "local-exec" {
-     command = "python ${path.module}/configure_vyatta.py --action add-vlan -n ${ibm_network_vlan.sps_public_vlan.vlan_number}  -i ${ibm_network_vlan.sps_public_vlan.id} -t public"
+     command = "python ${path.module}/configure_vyatta.py --action add-vlan -n ${data.ibm_network_vlan.sps_public_vlan.number}  -i ${data.ibm_network_vlan.sps_public_vlan.id} -t public"
    }
 
 
    # Add private vlan info
    provisioner "local-exec" {
-     command = "python ${path.module}/configure_vyatta.py --action add-vlan -n ${ibm_network_vlan.sps_private_vlan.vlan_number}  -i ${ibm_network_vlan.sps_private_vlan.id} -t private"
+     command = "python ${path.module}/configure_vyatta.py --action add-vlan -n ${data.ibm_network_vlan.sps_private_vlan.number}  -i ${data.ibm_network_vlan.sps_private_vlan.id} -t private"
    }
 }
 
@@ -163,22 +146,22 @@ output "gateway_id" {
   value = "${ibm_network_gateway.gateway.id}"
 }
 output "sps_public_vlan_id" {
-  value = "${ibm_network_vlan.sps_public_vlan.id}"
+  value = "${data.ibm_network_vlan.sps_public_vlan.id}"
 }
 output "sps_private_vlan_id" {
-  value = "${ibm_network_vlan.sps_private_vlan.id}"
+  value = "${data.ibm_network_vlan.sps_private_vlan.id}"
 }
 output "sps_public_vlan_num" {
-  value = "${ibm_network_vlan.sps_public_vlan.vlan_number}"
+  value = "${data.ibm_network_vlan.sps_public_vlan.number}"
 }
 output "sps_private_vlan_num" {
-  value = "${ibm_network_vlan.sps_private_vlan.vlan_number}"
+  value = "${data.ibm_network_vlan.sps_private_vlan.number}"
 }
 output "sps_public_vlan_name" {
-  value = "${ibm_network_vlan.sps_public_vlan.name}"
+  value = "${data.ibm_network_vlan.sps_public_vlan.name}"
 }
 output "sps_private_vlan_name" {
-  value = "${ibm_network_vlan.sps_private_vlan.name}"
+  value = "${data.ibm_network_vlan.sps_private_vlan.name}"
 }
 output "sps_primary_gateway_ip" {
   value = "${lookup(ibm_network_gateway.gateway.members[0],"public_ipv4_address")}"

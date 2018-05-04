@@ -35,4 +35,10 @@ variable "region" {
     description = "Region name - for example us-south, us-east etc"
 }
    
+variable "sps_public_vlan_name" {
+    description = "Public vlan name"
+}
 
+variable "sps_private_vlan_name" {
+    description = "Private vlan name"
+}
