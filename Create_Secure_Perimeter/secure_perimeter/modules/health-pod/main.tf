@@ -18,25 +18,7 @@ resource "kubernetes_namespace" "monitoring_namespace" {
   }
 }
 
-# TODO: can remove kube secret once image is available publicly
-resource "kubernetes_secret" "bmx_container_registry" {
-  depends_on = ["kubernetes_namespace.monitoring_namespace"]
-
-  metadata {
-    name = "bmx-container-registry"
-    namespace = "sp-monitoring"
-  }
-
-  data {
-    ".dockercfg" = "${file("${path.module}/registry-config.json")}"
-  }
-
-  type = "kubernetes.io/dockercfg"
-}
-
 resource "kubernetes_replication_controller" "health_pod" {
-  depends_on = ["kubernetes_secret.bmx_container_registry"]
-
   metadata {
     name = "health-pod"
     namespace = "sp-monitoring"
@@ -52,12 +34,11 @@ resource "kubernetes_replication_controller" "health_pod" {
     }
     template {
       container {
-        # TODO: update image location - <registry>/secure-perimeter/sps-exposure-monitoring:latest
-        image = "registry.ng.bluemix.net/secure-perimeter/health_monitoring:1.0"
+        image = "registry.ng.bluemix.net/ibm/ibmcloud-secure-perimeter-health:1.0.0"
         name  = "health-pod"
         args  = [
           "/usr/local/bin/python",
-          "/check_sp.py",
+          "/run.py",
           "--scan",
           "private",
           "--exclude-vlan-ids",
@@ -79,11 +60,6 @@ resource "kubernetes_replication_controller" "health_pod" {
           value = "${var.slapikey}"
         }
       }
-      image_pull_secrets = [
-        {
-          name = "bmx-container-registry"
-        }
-      ]
     }
   }
 }
