@@ -34,24 +34,19 @@ resource "kubernetes_pod" "network-pod" {
 
   spec {
     container {
-      image = "registry.ng.bluemix.net/secure-perimeter/secure-perimeter:0.0.20"
+      image = "registry.ng.bluemix.net/ibmcloud-secure-perimeter-network:1.0.0"
       name  = "network-pod"
       volume_mount {
         name = "network-vol"
         mount_path = "/opt/secure-perimeter"
       }
     }
-    image_pull_secrets = [
-        {
-          name = "bmx-container-registry"
-        }
-      ]
     volume {
       name = "network-vol"
       persistent_volume_claim {
         claim_name = "network-pvc"
     }
-      
+
     }
   }
 }
@@ -61,7 +56,7 @@ resource "kubernetes_pod" "network-pod" {
 #Copy in the ssh key file and the config.json file
 
 resource "null_resource" "copy_files_to_network-pod" {
-   depends_on = ["kubernetes_pod.network-pod"] 
+   depends_on = ["kubernetes_pod.network-pod"]
 
    provisioner "local-exec" {
         command = "kubectl  --kubeconfig=${var.cluster_config_path} cp  ${path.root}/keys sp-monitoring/network-pod:/opt/secure-perimeter/"
@@ -70,12 +65,10 @@ resource "null_resource" "copy_files_to_network-pod" {
         command = "kubectl  --kubeconfig=${var.cluster_config_path} cp  ${path.root}/state.json sp-monitoring/network-pod:/opt/secure-perimeter/state.json"
      }
    provisioner "local-exec" {
-        command = "kubectl  --kubeconfig=${var.cluster_config_path} cp ${path.root}/config.json sp-monitoring/network-pod:/opt/secure-perimeter/config.json" 
+        command = "kubectl  --kubeconfig=${var.cluster_config_path} cp ${path.root}/config.json sp-monitoring/network-pod:/opt/secure-perimeter/config.json"
      }
    provisioner "local-exec" {
         command = "kubectl  --kubeconfig=${var.cluster_config_path} cp ${path.root}/rules.conf sp-monitoring/network-pod:/opt/secure-perimeter/rules.conf"
      }
 
 }
-
-

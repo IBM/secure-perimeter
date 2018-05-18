@@ -1,8 +1,0 @@
-{
-  "registry.ng.bluemix.net": {
-    "username": "token",
-    "password":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJmNGZlMGJkOS0zYWQ5LTVkMzktYjA2YS01NTg2YjI1MDAwZWYiLCJpc3MiOiJyZWdpc3RyeS5uZy5ibHVlbWl4Lm5ldCJ9.HC2RRlMFeTlPAwAi-eOGf71sev1PVYiKfzs52QxbcvE",
-    "email":"token",
-    "auth":"dG9rZW46ZXlKaGJHY2lPaUpJVXpJMU5pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SnFkR2tpT2lKbU5HWmxNR0prT1MwellXUTVMVFZrTXprdFlqQTJZUzAxTlRnMllqSTFNREF3WldZaUxDSnBjM01pT2lKeVpXZHBjM1J5ZVM1dVp5NWliSFZsYldsNExtNWxkQ0o5LkhDMlJSbE1GZVRsUEF3QWktZU9HZjcxc2V2MVBWWWlLZnpzNTJReGJjdkU="
-  }
-}
