@@ -15,7 +15,7 @@ provider "docker" {
 resource "null_resource" "pull_image" {
 
   provisioner "local-exec" {
-    command = "docker pull registry.ng.bluemix.net/secure-perimeter/secure-perimeter:0.0.20"
+    command = "docker pull registry.ng.bluemix.net/ibmcloud-secure-perimeter-network:1.0.0"
   }
 
 }
@@ -23,7 +23,7 @@ resource "null_resource" "pull_image" {
 # Create a container
 resource "docker_container" "set_interfaces" {
   depends_on = ["null_resource.configure_vyatta_file", "null_resource.pull_image"]
-  image = "registry.ng.bluemix.net/secure-perimeter/secure-perimeter:0.0.20"
+  image = "registry.ng.bluemix.net/ibmcloud-secure-perimeter-network:1.0.0"
   name  = "network_container_${var.random_id}"
   command = ["python","config-secure-perimeter.py"]
   volumes {
