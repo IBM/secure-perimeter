@@ -34,7 +34,7 @@ resource "kubernetes_pod" "network-pod" {
 
   spec {
     container {
-      image = "registry.ng.bluemix.net/ibmcloud-secure-perimeter-network:1.0.0"
+      image = "registry.bluemix.net/ibm/ibmcloud-secure-perimeter-network:1.0.0"
       name  = "network-pod"
       volume_mount {
         name = "network-vol"
