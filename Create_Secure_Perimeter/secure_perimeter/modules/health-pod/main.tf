@@ -34,7 +34,7 @@ resource "kubernetes_replication_controller" "health_pod" {
     }
     template {
       container {
-        image = "registry.ng.bluemix.net/ibm/ibmcloud-secure-perimeter-health:1.0.0"
+        image = "registry.bluemix.net/ibm/ibmcloud-secure-perimeter-health:1.0.0"
         name  = "health-pod"
         args  = [
           "/usr/local/bin/python",
