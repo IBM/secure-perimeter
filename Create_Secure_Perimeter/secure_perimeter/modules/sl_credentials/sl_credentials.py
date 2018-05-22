@@ -21,10 +21,11 @@ ims_user_id = query_args["ims_user_id"]
 ims_token = query_args["ims_token"]
 
 slclient = SoftLayer.Client(auth=TokenAuthentication(ims_user_id, ims_token))
-user_auth_keys = slclient.call("User_Customer", "getObject", id=ims_user_id, mask="username;apiAuthenticationKeys.authenticationKey")
+user_auth_keys = slclient.call("User_Customer", "getObject", id=ims_user_id, mask="username;email;apiAuthenticationKeys.authenticationKey")
 
 result = {
     "username": user_auth_keys["username"],
+    "email": user_auth_keys["email"],
     "apikey": user_auth_keys["apiAuthenticationKeys"][0]["authenticationKey"]
 }
 

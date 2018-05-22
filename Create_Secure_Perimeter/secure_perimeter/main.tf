@@ -41,7 +41,7 @@ provider "ibm" {
   softlayer_username = "${module.sl_credentials.username}"
   softlayer_api_key = "${module.sl_credentials.apikey}"
   region = "${var.region}"
-} 
+}
 
 resource "random_id" "name" {
   byte_length = 4
@@ -71,6 +71,7 @@ module "monitoring_cluster" {
     space_guid   = "${data.ibm_space.space.id}"
     slusername = "${module.sl_credentials.username}"
     slapikey = "${module.sl_credentials.apikey}"
+    slemail  = "${module.sl_credentials.email}"
     account_guid = "${data.ibm_account.account.id}"
     machine_type = "${var.machine_type}"
     sps_public_vlan_id = "${module.network.sps_public_vlan_id}"
@@ -122,4 +123,3 @@ output "gateway_name" {
 output "gateway_id" {
   value = "${module.network.gateway_id}"
 }
-  

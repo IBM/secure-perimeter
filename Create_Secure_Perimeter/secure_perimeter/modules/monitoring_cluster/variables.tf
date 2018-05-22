@@ -5,6 +5,11 @@ variable "slusername" {
 variable "slapikey" {
    description = "SL api key"
 }
+
+variable "slemail" {
+  description = "SL email"
+}
+
 variable "cluster_name" {
    type = "string"
    description = "Cluster name"

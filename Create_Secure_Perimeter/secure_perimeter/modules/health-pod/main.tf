@@ -11,6 +11,11 @@ provider "kubernetes" {
    version = "~> 1.1"
 }
 
+module "registry_token" {
+  source = "../modules/registry_token"
+  file_path = "${path.module}/docker-registry.json"
+  email = "${var.slemail}"
+}
 
 resource "kubernetes_namespace" "monitoring_namespace" {
   metadata {
@@ -18,7 +23,22 @@ resource "kubernetes_namespace" "monitoring_namespace" {
   }
 }
 
+resource "kubernetes_secret" "regcred" {
+  metadata {
+    name = "regcred"
+    namespace = "test-ns"
+  }
+
+  data {
+    ".dockercfgjson" = "${file(module.registry_token.file_path)}"
+  }
+
+  type = "kubernetes.io/dockercfgjson"
+}
+
 resource "kubernetes_replication_controller" "health_pod" {
+  depends_on = ["kubernetes_secret.regcred"]
+
   metadata {
     name = "health-pod"
     namespace = "sp-monitoring"
@@ -34,7 +54,7 @@ resource "kubernetes_replication_controller" "health_pod" {
     }
     template {
       container {
-        image = "registry.bluemix.net/ibm/ibmcloud-secure-perimeter-health:1.0.0"
+        image = "registry.ng.bluemix.net/ibm/ibmcloud-secure-perimeter-health:1.0.0"
         name  = "health-pod"
         args  = [
           "/usr/local/bin/python",
@@ -60,6 +80,11 @@ resource "kubernetes_replication_controller" "health_pod" {
           value = "${var.slapikey}"
         }
       }
+      image_pull_secrets = [
+        {
+          name = "regcred"
+        }
+      ]
     }
   }
 }

@@ -19,6 +19,10 @@ output "username" {
   value = "${data.external.sl_credentials.result["username"]}"
 }
 
+output "email" {
+  value = "${data.external.sl_credentials.result["email"]}"
+}
+
 output "apikey" {
   value = "${data.external.sl_credentials.result["apikey"]}"
 }

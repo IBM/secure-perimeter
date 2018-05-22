@@ -16,6 +16,10 @@ variable "slapikey" {
   description = "SoftLayer api key"
 }
 
+variable "slemail" {
+  description = "SoftLayer user email"
+}
+
 variable "cluster_config_path" {
    type = "string"
    description = "Cluster name config path"
