@@ -26,7 +26,7 @@ resource "kubernetes_namespace" "monitoring_namespace" {
 resource "kubernetes_secret" "regcred" {
   metadata {
     name = "regcred"
-    namespace = "test-ns"
+    namespace = "sp-monitoring"
   }
 
   data {
