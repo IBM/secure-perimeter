@@ -1,0 +1,15 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: network-pod
+spec:
+  volumes:
+    - name: network-vol
+      persistentVolumeClaim:
+       claimName: network-pvc
+  containers:
+    - name: network-pod
+      image: registry.bluemix.net/ibm/ibmcloud-secure-perimeter-network:1.0.0
+      volumeMounts:
+        - mountPath: "/opt/secure-perimeter"
+          name: network-vol
