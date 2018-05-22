@@ -41,6 +41,11 @@ resource "kubernetes_pod" "network-pod" {
         mount_path = "/opt/secure-perimeter"
       }
     }
+    image_pull_secrets = [
+      {
+        name = "regcred"
+      }
+    ]
     volume {
       name = "network-vol"
       persistent_volume_claim {

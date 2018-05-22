@@ -11,6 +11,7 @@ module "health-pod" {
   source = "../health-pod"
   slusername      = "${var.slusername}"
   slapikey        = "${var.slapikey}"
+  slemail         = "${var.slemail}"
   sps_public_vlan_id = "${var.sps_public_vlan_id}"
   sps_private_vlan_id = "${var.sps_private_vlan_id}"
   org_guid        = "${var.org_guid}"
