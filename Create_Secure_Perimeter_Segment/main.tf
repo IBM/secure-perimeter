@@ -109,12 +109,12 @@ resource "null_resource" "copy-config-from-pod" {
   depends_on = ["ibm_network_gateway_vlan_association.private_vlan_assoc", "ibm_network_gateway_vlan_association.public_vlan_assoc"]
 
   provisioner "local-exec" {
-    command = "kubectl --kubeconfig=${data.ibm_container_cluster_config.kube_config.config_file_path} cp sp-monitoring/network-pod:/opt/secure-perimeter/config.json ${path.root}/config.json"
+    command = "kubectl --kubeconfig=${data.ibm_container_cluster_config.kube_config.config_file_path} cp network-pod:/opt/secure-perimeter/config.json ${path.root}/config.json"
   }
 
   provisioner "local-exec" {
     when    = "destroy"
-    command = "kubectl --kubeconfig=${data.ibm_container_cluster_config.kube_config.config_file_path} cp sp-monitoring/network-pod:/opt/secure-perimeter/config.json ${path.root}/config.json"
+    command = "kubectl --kubeconfig=${data.ibm_container_cluster_config.kube_config.config_file_path} cp network-pod:/opt/secure-perimeter/config.json ${path.root}/config.json"
   }
 }
 
@@ -148,12 +148,12 @@ resource "null_resource" "copy-config-to-pod" {
   depends_on = ["null_resource.configure_public_vlan"]
 
   provisioner "local-exec" {
-    command = "kubectl --kubeconfig=${data.ibm_container_cluster_config.kube_config.config_file_path} cp ${path.root}/config.json sp-monitoring/network-pod:/opt/secure-perimeter/config.json"
+    command = "kubectl --kubeconfig=${data.ibm_container_cluster_config.kube_config.config_file_path} cp ${path.root}/config.json network-pod:/opt/secure-perimeter/config.json"
   }
 
   provisioner "local-exec" {
     when    = "destroy"
-    command = "kubectl --kubeconfig=${data.ibm_container_cluster_config.kube_config.config_file_path} cp ${path.root}/config.json sp-monitoring/network-pod:/opt/secure-perimeter/config.json"
+    command = "kubectl --kubeconfig=${data.ibm_container_cluster_config.kube_config.config_file_path} cp ${path.root}/config.json network-pod:/opt/secure-perimeter/config.json"
   }
 }
 
@@ -161,11 +161,11 @@ resource "null_resource" "apply_config" {
   depends_on = ["null_resource.copy-config-to-pod"]
 
   provisioner "local-exec" {
-    command = "kubectl exec --kubeconfig=${data.ibm_container_cluster_config.kube_config.config_file_path} -n sp-monitoring network-pod python config-secure-perimeter.py"
+    command = "kubectl exec --kubeconfig=${data.ibm_container_cluster_config.kube_config.config_file_path} network-pod python config-secure-perimeter.py"
   }
 
   provisioner "local-exec" {
     when    = "destroy"
-    command = "kubectl exec --kubeconfig=${data.ibm_container_cluster_config.kube_config.config_file_path} -n sp-monitoring network-pod python config-secure-perimeter.py"
+    command = "kubectl exec --kubeconfig=${data.ibm_container_cluster_config.kube_config.config_file_path} network-pod python config-secure-perimeter.py"
   }
 }
