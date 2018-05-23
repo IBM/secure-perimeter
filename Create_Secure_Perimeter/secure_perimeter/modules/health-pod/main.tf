@@ -11,17 +11,9 @@ provider "kubernetes" {
    version = "~> 1.1"
 }
 
-
-resource "kubernetes_namespace" "monitoring_namespace" {
-  metadata {
-    name = "sp-monitoring"
-  }
-}
-
 resource "kubernetes_replication_controller" "health_pod" {
   metadata {
     name = "health-pod"
-    namespace = "sp-monitoring"
 
     labels {
       app = "health-pod"
