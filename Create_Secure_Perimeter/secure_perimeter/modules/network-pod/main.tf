@@ -25,7 +25,6 @@ resource "null_resource" "create_pvc" {
 resource "kubernetes_pod" "network-pod" {
   metadata {
     name = "network-pod"
-    namespace = "sp-monitoring"
 
     labels {
       app = "network-pod"
@@ -59,16 +58,16 @@ resource "null_resource" "copy_files_to_network-pod" {
    depends_on = ["kubernetes_pod.network-pod"]
 
    provisioner "local-exec" {
-        command = "kubectl  --kubeconfig=${var.cluster_config_path} cp  ${path.root}/keys sp-monitoring/network-pod:/opt/secure-perimeter/"
+        command = "kubectl  --kubeconfig=${var.cluster_config_path} cp  ${path.root}/keys network-pod:/opt/secure-perimeter/"
      }
    provisioner "local-exec" {
-        command = "kubectl  --kubeconfig=${var.cluster_config_path} cp  ${path.root}/state.json sp-monitoring/network-pod:/opt/secure-perimeter/state.json"
+        command = "kubectl  --kubeconfig=${var.cluster_config_path} cp  ${path.root}/state.json network-pod:/opt/secure-perimeter/state.json"
      }
    provisioner "local-exec" {
-        command = "kubectl  --kubeconfig=${var.cluster_config_path} cp ${path.root}/config.json sp-monitoring/network-pod:/opt/secure-perimeter/config.json"
+        command = "kubectl  --kubeconfig=${var.cluster_config_path} cp ${path.root}/config.json network-pod:/opt/secure-perimeter/config.json"
      }
    provisioner "local-exec" {
-        command = "kubectl  --kubeconfig=${var.cluster_config_path} cp ${path.root}/rules.conf sp-monitoring/network-pod:/opt/secure-perimeter/rules.conf"
+        command = "kubectl  --kubeconfig=${var.cluster_config_path} cp ${path.root}/rules.conf network-pod:/opt/secure-perimeter/rules.conf"
      }
 
 }
