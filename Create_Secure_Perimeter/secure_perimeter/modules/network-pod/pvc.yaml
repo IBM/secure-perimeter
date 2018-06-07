@@ -3,7 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: network-pvc
   annotations:
-    volume.beta.kubernetes.io/storage-class: "ibmc-file-bronze"
+    volume.beta.kubernetes.io/storage-class: "ibmc-file-gold"
 spec:
   accessModes:
     - ReadWriteMany
