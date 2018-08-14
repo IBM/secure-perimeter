@@ -57,11 +57,11 @@ variable "file_id" {
    type = "string"
    description = "configure_vyatta_file id - needed as dependency beofre creating cluster"
 }
-variable "workers" {
-   type = "list"
-   description = "workers names"
-}
 
 variable "num_workers" {
    description = "Number of workers"
+}
+
+variable "hardware" {
+   description = "The level of hardware isolation for your worker node"
 }

@@ -71,13 +71,13 @@ module "monitoring_cluster" {
     space_guid   = "${data.ibm_space.space.id}"
     slusername = "${module.sl_credentials.username}"
     slapikey = "${module.sl_credentials.apikey}"
+    hardware = "${var.hardware}"
     account_guid = "${data.ibm_account.account.id}"
     machine_type = "${var.machine_type}"
     sps_public_vlan_id = "${module.network.sps_public_vlan_id}"
     sps_private_vlan_id = "${module.network.sps_private_vlan_id}"
     gateway_notes = "${module.network.gateway_notes}"
     num_workers = "${var.num_workers}"
-    workers = "${var.workers}"
     file_id = "${module.network.file_id}"
 }
 

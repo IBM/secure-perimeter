@@ -11,12 +11,13 @@ resource "ibm_container_cluster" "monitoring_cluster" {
   datacenter   = "${var.datacenter}"
   org_guid     = "${var.org_guid}"
   space_guid   = "${var.space_guid}"
+  hardware     = "${var.hardware}"
   account_guid = "${var.account_guid}"
   machine_type = "${var.machine_type}"
   public_vlan_id = "${var.sps_public_vlan_id}"
   private_vlan_id = "${var.sps_private_vlan_id}"
   no_subnet    = true
-  workers = "${var.workers[var.num_workers]}"
+  worker_num = "${var.num_workers}" 
   tags = ["${var.file_id}","${var.gateway_notes}"]
 
 }
