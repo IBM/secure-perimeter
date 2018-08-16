@@ -69,7 +69,3 @@ variable "disk_size" {
   default = 25
   description = "The disk_size in GB for VM instance for tomcat"
 }
-variable "num_workers" {
-   description = "Number of workers"
-   default = 1
-}

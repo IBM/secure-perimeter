@@ -17,7 +17,7 @@ resource "ibm_container_cluster" "monitoring_cluster" {
   public_vlan_id = "${var.sps_public_vlan_id}"
   private_vlan_id = "${var.sps_private_vlan_id}"
   no_subnet    = true
-  worker_num = "${var.num_workers}" 
+  default_pool_size = 1
   tags = ["${var.file_id}","${var.gateway_notes}"]
 
 }
