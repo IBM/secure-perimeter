@@ -77,7 +77,6 @@ module "monitoring_cluster" {
     sps_public_vlan_id = "${module.network.sps_public_vlan_id}"
     sps_private_vlan_id = "${module.network.sps_private_vlan_id}"
     gateway_notes = "${module.network.gateway_notes}"
-    num_workers = "${var.num_workers}"
     file_id = "${module.network.file_id}"
 }
 
