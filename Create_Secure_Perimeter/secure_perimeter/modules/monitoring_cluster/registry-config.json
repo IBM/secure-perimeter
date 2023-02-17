@@ -1,0 +1,8 @@
+{
+  "registry.ng.bluemix.net": {
+    "username": "token",
+    "password":"add password here"
+    "email":"token",
+    "auth":"ad auth  here"
+  }
+}
